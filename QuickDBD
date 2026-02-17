@@ -1,0 +1,42 @@
+# SCHEMA aether_core
+amod_aether_module
+--------------
+id PK INT IDENTITY FK >- devc_device.module_id
+module_name   VARCHAR(100)
+schema_name   VARCHAR(100)
+create_date   DATETIME
+active        BOOLEAN
+
+# SCHEMA poseidon
+devc_device
+--------------
+id PK INT IDENTITY FK >- sens_sensor.device_id
+module_id     INT FK
+device_name   VARCHAR(100)
+device_type   VARCHAR(50)
+create_date   DATETIME
+active        BOOLEAN
+
+styp_sensor_type
+--------------
+id PK INT IDENTITY FK >- sens_sensor.sensor_type_id
+sensor_name           VARCHAR(50)     # temperature, humidity
+sensor_unit           VARCHAR(20)     # °C, %, Pa
+create_date           DATETIME
+
+sens_sensor
+--------------
+id PK INT IDENTITY FK >- dsrd_data_sensor_received.sensor_id
+device_id      INT FK
+sensor_type_id INT FK
+create_date    DATETIME
+active         BOOLEAN
+
+dsrd_data_sensor_received
+--------------
+id     PK INT IDENTITY
+sensor_id   INT FK
+device_id INT FK >- devc_device.id
+data_value  DECIMAL(10,4)
+read_date DATETIME
+create_date DATETIME
